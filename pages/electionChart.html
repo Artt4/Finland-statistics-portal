@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Election Chart</title>
+    <script src="https://unpkg.com/frappe-charts@latest"></script>
+    <script src="../js/dataFetch.js" defer></script>
+    <script src="../js/electionChart.js" defer></script>
+    <link rel="stylesheet" href="../css/styles.css">
+</head>
+<header>
+    <h1>Finland Statistic Portal</h1>
+</header>
+<body>
+    <div id="chart-container"style="display: none;">
+        <div id="chart"></div>
+    </div>
+    <div id="loading-text" style="display: block; padding: 1rem;" >Loading...</div>
+    <div id="party-selection" style="display: none;">
+        <label>
+            <input type="checkbox" class="party-checkbox" value="KD" checked> KD
+        </label>
+        <label>
+            <input type="checkbox" class="party-checkbox" value="RKP" checked> RKP
+        </label>
+        <label>
+            <input type="checkbox" class="party-checkbox" value="VAS" checked> VAS
+        </label>
+        <label>
+            <input type="checkbox" class="party-checkbox" value="VIHR" checked> VIHR
+        </label>
+        <label>
+            <input type="checkbox" class="party-checkbox" value="KESK" checked> KESK
+        </label>
+        <label>
+            <input type="checkbox" class="party-checkbox" value="SDP" checked> SDP
+        </label>
+        <label>
+            <input type="checkbox" class="party-checkbox" value="PS" checked> PS
+        </label>
+        <label>
+            <input type="checkbox" class="party-checkbox" value="KOK" checked> KOK
+        </label>
+    </div>
+    <div id="buttons">
+        <button id="export-svg" style="display: none">Export SVG</button>    
+    </div>
+    <footer>
+        <a href="../index.html" id="navigation" style="display: none;">Go back</a>
+    </footer>    
+</body>
+</html>

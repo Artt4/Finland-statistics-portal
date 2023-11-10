@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Artturi Project</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tinycolor/1.4.1/tinycolor.min.js"></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <script src="js/script.js" defer></script>
+    <script src="js/dataFetch.js" defer></script>
+    <body>
+        <header>
+            <h1>Finland Statistic Portal</h1>
+        </header>
+        <main>
+            <div id="map-container">
+                <h2>Finnish parlimentary election results 2023</h2>
+                <div id="loading-text" class="loading">Loading Map...</div>
+                <div id="map" class="map-container"></div>
+            </div>
+            <div id="below-map-container">
+                <p id="non-mobile-text">Drag and drop one of the items below on any district to learn more about that:</p>
+                <p id="mobile-text">Click on a municipality to learn more about it.</p>
+                <div class="container">
+                    <div id="item1" class="draggable" draggable="true">Election<br>Data</div>
+                    <div id="item2" class="draggable" draggable="true">Age<br>Data</div>
+            </div>
+            </div>
+        </main>
+    </body>
+</html>

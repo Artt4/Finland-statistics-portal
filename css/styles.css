@@ -1,0 +1,169 @@
+/* Index */
+.loading { 
+    position: absolute;
+    top: 50%; 
+    left: 50%; 
+    transform: translate(-50%, -50%);
+    z-index: 2;
+    opacity: 1;
+}
+#map {
+    height: 60vh;
+    width: 60vh;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+#map-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+#map-container > h2 {
+    padding: 2%;
+    font-size:large;
+}
+#below-map-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+body {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+header {
+    text-align: left;
+    background-color: #3498db;
+    color: #fff;
+    padding: 0.1px;
+    padding-left: 5%;
+
+}
+main {
+    max-width: 60vh;
+    margin: 0 auto;
+    padding-bottom: 1rem;
+}
+
+.container {
+    background-color: #333;
+    color: #fff;
+    white-space: nowrap;
+    width: 10rem;
+    display: flex;
+    justify-content: center;
+    padding: 0.5rem;
+    border-radius: 5px;
+}
+  
+.draggable {
+    display: inline-block;
+    background-color: rgb(230, 230, 230);
+    cursor: move;
+    padding: 0.5rem;
+    text-align: center;
+    width: 4rem;
+    margin: 0.5rem;
+    transition: background-color 0.3s;
+    color:black;
+    border-radius: 5px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.8);
+}
+
+.draggable:hover {
+    background-color: #3498db;
+    color: #fff;
+}
+
+#non-mobile-text {
+    display: block;
+}
+
+#mobile-text {
+    padding-left: 1%;
+    display: none;
+}
+  
+.popup-links {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+
+/* ElectionChart and AgeChart */
+#buttons {
+    padding-top: 1rem;
+    padding-left: 1rem;
+    text-align: left;
+}
+
+#buttons button {
+    display: inline-block;
+    margin: 5px;
+}
+#party-selection{
+    padding-left: 1rem;
+}
+
+footer{
+    padding: 1rem;
+}
+
+
+/* Used to make mobile experience better */
+@media screen and (max-width: 768px) {
+    #map {
+        height: 50vh;
+        width: 100%;
+    }
+
+    header {
+        font-size: 12px;
+    }
+
+    /* No need to drag and drop on mobile */
+    .container {
+        display: none;
+    }
+
+    #non-mobile-text {
+        display: none;
+    }
+    #mobile-text {
+        padding-left: 1%;
+        display: block;
+    }
+
+    #chart{
+        width:800px;
+    }
+    #chart-container {
+        margin: 4px, 4px;
+        padding: 4px;
+        width: 100%;
+        overflow-x: auto;
+        overflow-y: hidden;
+        white-space: nowrap;
+    }
+
+    /* The tooltip info on mobile was very messy, so I hid it */
+    .graph-svg-tip{
+        display: none;
+    }
+    
+    /* Made things easier to press on mobiel */
+    .party-checkbox {
+        width: 20px;
+        height: 20px;
+    }
+    
+    button {
+        font-size: 18px;
+        padding: 10px 20px;
+    }
+    footer{
+        font-size: 20px;
+        margin-top: 1rem;
+    }
+    
+}

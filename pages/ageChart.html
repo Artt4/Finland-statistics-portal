@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Population Age</title>
+    <script src="https://unpkg.com/frappe-charts@latest"></script>
+    <script src="../js/dataFetch.js" defer></script>
+    <script src="../js/ageChart.js" defer></script>
+    <link rel="stylesheet" href="../css/styles.css">
+</head>
+<header>
+    <h1>Finland Statistic Portal</h1>
+</header>
+<body>
+    <div id="chart-container">
+        <div id="chart"></div>
+    </div>
+    <div id="loading-text" style="display: block; padding: 1rem;" >Loading...</div>
+    <div id="buttons">
+        <button id="add-data" style="display: none">Predict Data</button>
+        <button id="export-svg" style="display: none">Export SVG</button>    
+    </div>
+    <footer>
+        <div id="navigation-container">
+            <a href="../index.html" id="navigation" style="display: none;">Go back</a>
+        </div>
+    </footer>
+</body>
+</html>
