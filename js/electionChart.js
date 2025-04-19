@@ -4,32 +4,32 @@ function getQueryParam(parameterName) {
     return urlParams.get(parameterName);
 }
 
-// Retrieves from the URL
-const cityCode = getQueryParam("cityCode");
-const cityName = getQueryParam("name");
+document.addEventListener("DOMContentLoaded", () => {
+    const cityCode = getQueryParam("cityCode");
+    const cityName = getQueryParam("name");
+    let selectedParties = new Set();
 
-let selectedParties = new Set();
+    // Handle selected parties from query parameter
+    const selectedPartiesParam = getQueryParam("selectedParties");
+    if (selectedPartiesParam) {
+        const selectedPartiesArray = selectedPartiesParam.split(',');
+        selectedParties = new Set(selectedPartiesArray);
 
-// Check if the 'selectedParties' parameter is in the URL
-const selectedPartiesParam = getQueryParam("selectedParties");
-if (selectedPartiesParam) {
-    const selectedPartiesArray = selectedPartiesParam.split(',');
-    selectedParties = new Set(selectedPartiesArray);
+        selectedPartiesArray.forEach(party => {
+            const checkbox = document.querySelector(`input[type="checkbox"][value="${party}"]`);
+            if (checkbox) {
+                checkbox.checked = false;
+            }
+        });
+    }
 
-    // Loop through the selected parties and uncheck their corresponding checkboxes
-    selectedPartiesArray.forEach(party => {
-        const checkbox = document.querySelector(`input[type="checkbox"][value="${party}"]`);
-        if (checkbox) {
-            checkbox.checked = false;
-        }
-    });
-}
+    if (cityCode) {
+        buildBarChart(cityCode, cityName, selectedParties);
+    }
+});
 
-if (cityCode) {
-    buildBarChart(cityCode);
-}
 // Build a bar chart using the specified city code
-async function buildBarChart(cityCode) {
+async function buildBarChart(cityCode, cityName, selectedParties) {
     const data = await fetchData(cityCode);
 
     const labels = Object.values(data.dimension.Vuosi.category.label);
@@ -38,13 +38,12 @@ async function buildBarChart(cityCode) {
     const values = data.value;
     const reversedValues = values.reverse();
 
-    //Matching the values to the party and year
-    partiesReversed.forEach((party, index) => {
+    const datasets = partiesReversed.map((party, index) => {
         let partySupport = [];
         for (let i = 0; i < 7; i++) {
             partySupport.push(reversedValues[i * parties.length + index]);
         }
-        partiesReversed[index] = {
+        return {
             name: party,
             values: partySupport.reverse()
         };
@@ -52,7 +51,7 @@ async function buildBarChart(cityCode) {
 
     const chartData = {
         labels: labels,
-        datasets: parties.filter(party => !selectedParties.has(party.name)) //Makes sure to show the parties that are checked
+        datasets: datasets.filter(party => !selectedParties.has(party.name))
     };
 
     const chart = new frappe.Chart("#chart", {
@@ -69,7 +68,7 @@ async function buildBarChart(cityCode) {
         }
     });
 
-    showHiddenElements();  
+    showHiddenElements();
 
     document.querySelectorAll(`input[type="checkbox"].party-checkbox`).forEach(checkbox => {
         checkbox.addEventListener("change", function () {
@@ -78,50 +77,38 @@ async function buildBarChart(cityCode) {
             } else {
                 selectedParties.add(checkbox.value);
             }
-            refreshPage();
+            refreshPage(selectedParties);
         });
     });
 
-    // Function to refresh the page with updated selected checkboxes and parties
-    function refreshPage() {
-        // Pass the selectedParties set as a query parameter for the page reload
-        const selectedPartiesParam = Array.from(selectedParties).join(',');
-        const newURL = new URL(window.location.href);
-        newURL.searchParams.set("selectedParties", selectedPartiesParam);
-        location.href = newURL.toString();
-    }
-    
     document.getElementById("export-svg").addEventListener("click", () => {
         chart.export();
     });
+}
 
-    //Used when loading page
-    function showHiddenElements() {
-        const loadingElement = document.getElementById("loading-text");
-        const chartElement = document.getElementById("chart-container");
-        const partySelectionElement = document.getElementById("party-selection");
-        const navigationElement = document.getElementById("navigation");
-        const exportSvgElement = document.getElementById("export-svg");
+// Refresh the page with updated selected checkboxes and parties
+function refreshPage(selectedParties) {
+    const selectedPartiesParam = Array.from(selectedParties).join(',');
+    const newURL = new URL(window.location.href);
+    newURL.searchParams.set("selectedParties", selectedPartiesParam);
+    location.href = newURL.toString();
+}
 
-        if (chartElement) {
-            chartElement.style.display = "block";
-        }
-        if (partySelectionElement) {
-            partySelectionElement.style.display = "block";
-        }
-        if (navigationElement) {
-            navigationElement.style.display = "block";
-        }
-        if (exportSvgElement) {
-            exportSvgElement.style.display = "inline-block";
-        }
-        if (loadingElement) {
-            loadingElement.style.display = "none";
-        }
-    }
+// Show hidden elements after loading
+function showHiddenElements() {
+    const loadingElement = document.getElementById("loading-text");
+    const chartElement = document.getElementById("chart-container");
+    const partySelectionElement = document.getElementById("party-selection");
+    const navigationElement = document.getElementById("navigation");
+    const exportSvgElement = document.getElementById("export-svg");
+
+    if (chartElement) chartElement.style.display = "block";
+    if (partySelectionElement) partySelectionElement.style.display = "block";
+    if (navigationElement) navigationElement.style.display = "block";
+    if (exportSvgElement) exportSvgElement.style.display = "inline-block";
+    if (loadingElement) loadingElement.style.display = "none";
 }
 
 async function fetchData(cityCode) {
-    const data = await getElectionForCity(cityCode);
-    return data;
+    return await getElectionForCity(cityCode);
 }
